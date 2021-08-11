@@ -21,6 +21,8 @@ public class MesAno {
 		this.descricao = descricao;
 	}
 
+	public MesAno() {}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idMesAno;

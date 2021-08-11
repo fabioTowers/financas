@@ -28,6 +28,10 @@ public class Receita {
 		this.valor = valor;
 		this.mesAno = mesAno;
 	}
+	
+	public Receita() {
+		super();
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,4 +53,7 @@ public class Receita {
 	@ManyToOne
 	@JoinColumn(name="mes_ano_id") //O nome da chave estrangeira
 	private MesAno mesAno;
+	
+	@Column
+	private String observacao;
 }

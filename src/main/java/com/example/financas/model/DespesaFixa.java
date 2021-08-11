@@ -41,6 +41,9 @@ public class DespesaFixa {
 	@Column(name="data_pagamento")
 	private LocalDate dataPagamento;
 	
+	@Column
+	private String observacao;
+	
 	/*Um mesmo mes e ano pode estar em muitas despesas fixas*/
 	@ManyToOne
 	@JoinColumn(name="mes_ano_id") //O nome da chave estrangeira

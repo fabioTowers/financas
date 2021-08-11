@@ -18,6 +18,10 @@ import lombok.Setter;
 @Setter
 public class Categoria {
 	
+	public Categoria() {
+		
+	}
+	
 	public Categoria(String descricao, LocalDate dataCriacao) {
 		this.descricao = descricao;
 		this.dataCriacao = dataCriacao;

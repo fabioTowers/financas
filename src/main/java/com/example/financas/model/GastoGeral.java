@@ -29,6 +29,10 @@ public class GastoGeral {
 		this.valor = valor;
 		this.mesAno = mesAno;
 	}
+	
+	public GastoGeral() {
+		super();
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

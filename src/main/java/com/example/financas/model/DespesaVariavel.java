@@ -2,6 +2,7 @@ package com.example.financas.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,7 +49,18 @@ public class DespesaVariavel {
 	private String observacao;
 	
 	/*Um mesmo mes e ano pode estar em muitas despesas variaveis*/
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="mes_ano_id") //O nome da chave estrangeira
 	private MesAno mesAno;
+	
+	public void atualizarRegistro(DespesaVariavel novoRegistro) {
+		this.setCategoria(novoRegistro.getCategoria());
+		this.setDataPagamento(novoRegistro.getDataPagamento());
+		this.setDescricao(novoRegistro.getDescricao());
+		this.setMesAno(novoRegistro.getMesAno());
+		this.setObservacao(novoRegistro.getObservacao());
+		this.setStatus(novoRegistro.getStatus());
+		this.setValorPago(novoRegistro.getValorPago());
+		this.setValorPlanejado(novoRegistro.getValorPlanejado());
+	}
 }
