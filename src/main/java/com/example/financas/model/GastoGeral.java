@@ -56,4 +56,12 @@ public class GastoGeral {
 	@ManyToOne
 	@JoinColumn(name="mes_ano_id") //O nome da chave estrangeira
 	private MesAno mesAno;
+	
+	public void atualizarRegistro(GastoGeral novoRegistro) {
+		this.setDataCompra( novoRegistro.getDataCompra() );
+		this.setDescricao( novoRegistro.getDescricao() );
+		this.setCategoria( novoRegistro.getCategoria() );
+		this.setValor( novoRegistro.getValor() );
+		this.setMesAno( novoRegistro.getMesAno() );
+	}
 }

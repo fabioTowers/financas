@@ -56,4 +56,13 @@ public class Receita {
 	
 	@Column
 	private String observacao;
+	
+	public void atualizarRegistro(Receita novoRegistro) {
+		this.setDescricao( novoRegistro.getDescricao() );
+		this.setFonte( novoRegistro.getFonte() );
+		this.setDataRecebimento( novoRegistro.getDataRecebimento() );
+		this.setValor( novoRegistro.getValor() );
+		this.setMesAno( novoRegistro.getMesAno() );
+		this.setObservacao( novoRegistro.getObservacao() );
+	}
 }

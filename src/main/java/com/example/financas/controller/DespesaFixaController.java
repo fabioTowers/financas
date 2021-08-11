@@ -57,13 +57,7 @@ public class DespesaFixaController {
 		DespesaFixa despesaFixa = dfRepo.findById(id).orElseThrow(() -> new ResourceAccessException(
 				"[editarDespesaFixa] Não há despesa variável com o ID informado: " + id));
 		
-		despesaFixa.setCategoria( despesaFixaAtualizada.getCategoria() );
-		despesaFixa.setDataPagamento( despesaFixaAtualizada.getDataPagamento() );
-		despesaFixa.setDescricao( despesaFixaAtualizada.getDescricao() );
-		despesaFixa.setMesAno( despesaFixaAtualizada.getMesAno() );
-		despesaFixa.setStatus( despesaFixaAtualizada.getStatus() );
-		despesaFixa.setValor( despesaFixaAtualizada.getValor() );
-		despesaFixa.setObservacao( despesaFixaAtualizada.getObservacao() );
+		despesaFixa.atualizarRegistro(despesaFixaAtualizada);
 		
 		DespesaFixa despesaFixaNova = dfRepo.save(despesaFixa);
 		return ResponseEntity.ok(despesaFixaNova);

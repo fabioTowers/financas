@@ -57,12 +57,7 @@ public class ReceitaController {
 		Receita receita = recRepo.findById(id).orElseThrow(() -> new ResourceAccessException(
 				"[editarReceita] Não há registro de receita com o id:" + id));
 		
-		receita.setDescricao( receitaAtualizada.getDescricao() );
-		receita.setFonte( receitaAtualizada.getFonte() );
-		receita.setDataRecebimento( receitaAtualizada.getDataRecebimento() );
-		receita.setValor( receitaAtualizada.getValor() );
-		receita.setMesAno( receitaAtualizada.getMesAno() );
-		receita.setObservacao( receitaAtualizada.getObservacao() );
+		receita.atualizarRegistro( receitaAtualizada );
 		
 		Receita receitaNova = recRepo.save(receita);
 		return ResponseEntity.ok(receitaNova);

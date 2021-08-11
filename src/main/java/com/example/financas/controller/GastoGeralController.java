@@ -57,11 +57,7 @@ public class GastoGeralController {
 		GastoGeral gasto = ggRepo.findById(id).orElseThrow(() -> new ResourceAccessException(
 				"[editarGasto] Não há registro em gastos gerais com o ID " + id));
 		
-		gasto.setDataCompra( novoGasto.getDataCompra() );
-		gasto.setDescricao( novoGasto.getDescricao() );
-		gasto.setCategoria( novoGasto.getCategoria() );
-		gasto.setValor( novoGasto.getValor() );
-		gasto.setMesAno( novoGasto.getMesAno() );
+		gasto.atualizarRegistro(novoGasto);
 		
 		GastoGeral gg = ggRepo.save(gasto);
 		return ResponseEntity.ok( gg );

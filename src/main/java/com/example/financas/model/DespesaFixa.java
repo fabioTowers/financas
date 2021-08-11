@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.example.financas.controller.DespesaFixaController;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -48,4 +50,14 @@ public class DespesaFixa {
 	@ManyToOne
 	@JoinColumn(name="mes_ano_id") //O nome da chave estrangeira
 	private MesAno mesAno;
+	
+	public void atualizarRegistro(DespesaFixa novoRegistro) {
+		this.setDescricao(novoRegistro.getDescricao());
+		this.setCategoria(novoRegistro.getCategoria());
+		this.setValor(novoRegistro.getValor());
+		this.setStatus(novoRegistro.getStatus());
+		this.setDataPagamento(novoRegistro.getDataPagamento());
+		this.setObservacao(novoRegistro.getObservacao());
+		this.setMesAno(novoRegistro.getMesAno());
+	}
 }
