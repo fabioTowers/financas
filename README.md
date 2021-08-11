@@ -3,6 +3,8 @@
 Esse projeto foi apresentado na disciplina de Linguagem de Programação 3 e é uma maneira simples de gerenciar suas finanças pessoais.
 Foi criada uma API REST usando Java e uma interface web usando React. A persistência dos dados foi feita com o banco de dados MySQL.
 
+Observação: Para facilitar a visualização e navegação os nomes das classes citadas a seguir são links para visualizar os arquivos.
+
 ## Sobre o sistema
 
 ### Visão Geral
@@ -72,7 +74,7 @@ Ao adicionar novos gastos e marcá-los como "PAGO" eles são automaticamente con
 
 Os controllers muitas vezes são responsáveis por gerar exceções quando, por exemplo, uma requisição válida é feita e o recurso que se procura não existe no banco de dados. Para tratar essas situações de forma legível e menos prolixa apliquei os conceitos de **programação funcional** para o lançamento das exceções.
 
-Para exemplificar está o método ```getReceitaById()``` que recebe um id de um registro de receita e devolve o objeto correspondente. No caso de uma consulta por um id que não existe no banco será lançada uma exceção com uma mensagem personalizada:
+Para exemplificar está o método ```getReceitaById()``` ([```ReceitaController```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/controller/ReceitaController.java "Ver na classe")) que recebe um id de um registro de receita e devolve o objeto correspondente. No caso de uma consulta por um id que não existe no banco será lançada uma exceção com uma mensagem personalizada:
 
 ```java
 // Consultar uma receita pelo ID
@@ -85,7 +87,7 @@ public ResponseEntity<Receita> getReceitaById(@PathVariable Long id){
 ```
 A mesma técnica acima foi empregada extensivamente nos demais controllers da aplicação.
 
-A funcionalidade de contabilizar os gastos por categoria foi implementada no back-end na classe ```EstatisticasController``` que acessa múltiplas tabelas do banco de dados filtrados pelo mês especificado na requisição.
+A funcionalidade de contabilizar os gastos por categoria foi implementada no back-end na classe [```EstatisticasController```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/controller/EstatisticasController.java "Ver classe") que acessa múltiplas tabelas do banco de dados filtrados pelo mês especificado na requisição.
 
 Um ponto importante para implementar essa funcionalidade é que ela envolve basicamente 3 tabelas do banco de dados:
 
@@ -93,7 +95,7 @@ Um ponto importante para implementar essa funcionalidade é que ela envolve basi
 * Despesas fixas e,
 * Despesas variáveis.
 
-Nessas três tabelas é necessário que primeiramente sejam selecionados apenas os registros relaionados ao mês especificado na requisição. Como a mesma operação é feita nas três tabelas foi criada a classe ```ListaPorMes``` no pacote dos controllers, e sua função retornar a lista de registros de cada tabela, isso também proporcionou maior **retilização** e um **código limpo**.
+Nessas três tabelas é necessário que primeiramente sejam selecionados apenas os registros relaionados ao mês especificado na requisição. Como a mesma operação é feita nas três tabelas foi criada a classe [```ListaPorMes```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/controller/ListaPorMes.java "Ver classe") no pacote dos controllers, e sua função retornar a lista de registros de cada tabela, isso também proporcionou maior **retilização** e um **código limpo**.
 
 Mas as tabelas são classes diferentes na aplicação, como um mesmo método poderia tratar isso?
 
@@ -107,7 +109,7 @@ public ListaPorMes(Class<?> classe, Object obj, MesAno mes) {
 }
 ```
 
-A consulta dos registros nas três tabelas (gastos em geral, despesas fixas e variáveis) é feita simultâneamente na classe ```EstatisticasController``` usando o conceito de **thread**, como é necessário que a aplicação aguarde essa consulta para continuar o processamento é utilizado o método **```join()```** para aguardar as threads. A seguir a implementação em ```EstatisticasController```:
+A consulta dos registros nas três tabelas (gastos em geral, despesas fixas e variáveis) é feita simultâneamente na classe [```EstatisticasController```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/controller/EstatisticasController.java "Ver classe") usando o conceito de **thread**, como é necessário que a aplicação aguarde essa consulta para continuar o processamento é utilizado o método **```join()```** para aguardar as threads. A seguir a implementação em [```EstatisticasController```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/controller/EstatisticasController.java "Ver classe"):
 
 ```java
 /*O mesmo método recebe em seu construtor 3 classes e objetos diferentes com apenas uma implementação e sem sobrecrita*/
@@ -140,7 +142,7 @@ List<DespesaFixa> despesasFixasNoMes = despFixa.registrosAgrupadorPorMes;
 List<DespesaVariavel> despesasVariaveisNoMes = despVaregistrosAgrupadorPorMes();
 ```
 
-No método ```run()``` na classe ```ListaPorMes``` temos o sobrescrita do método na interface ```Runnable``` que realiza a busca dos registros filtrando por mês. Note que independente do objeto e classe passada o nome do método invocado é sempre o mesmo (```findByMesAno()```):
+No método ```run()``` na classe [```ListaPorMes```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/controller/ListaPorMes.java "Ver classe") temos o sobrescrita do método na interface ```Runnable``` que realiza a busca dos registros filtrando por mês. Note que independente do objeto e classe passada o nome do método invocado é sempre o mesmo (```findByMesAno()```):
 
 ```java
 @Override
@@ -155,7 +157,7 @@ public void run() {
 }
 ```
 
-De volta a ```EstatisticasController``` depois de ter executado as operações descritas acima é criada uma lista do tipo ```ValorCategoria``` (que possui um campo com nome da categoria e outro com o total gasto nela). A lista é preenchida com os valores de categorias que existem no banco, para isso é utilizada novamente a **programação funcional** que reduz drásticamente a quantidade de código se comparado com outras abordagens. Veja que a seguir são consultados todos os registros de categorias e para cada um deles é instanciado um novo objeto ````ValorCategoria``` com o campo descrição preenchido com a categoria e o valor 0:
+De volta a [```EstatisticasController```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/controller/EstatisticasController.java "Ver classe") depois de ter executado as operações descritas acima é criada uma lista do tipo [```ValorCategoria```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/model/ValorCategoria.java "Ver classe") (que possui um campo com nome da categoria e outro com o total gasto nela). A lista é preenchida com os valores de categorias que existem no banco, para isso é utilizada novamente a **programação funcional** que reduz drásticamente a quantidade de código se comparado com outras abordagens. Veja que a seguir são consultados todos os registros de categorias e para cada um deles é instanciado um novo objeto [```ValorCategoria```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/model/ValorCategoria.java "Ver classe") com o campo descrição preenchido com a categoria e o valor 0:
 
 ```java
 List<ValorCategoria> totaisPorCategoria = catRepo.findAll().stream()
@@ -164,7 +166,7 @@ List<ValorCategoria> totaisPorCategoria = catRepo.findAll().stream()
 
 A lista criada é percorrida através de um laço ```for each``` e que a cada iteração manipula as listas de gastos, despesas fixas e variáveis como **streams**.
 
-No caso de gastos o conteúdo da lista é filtrado pelos registros que correspondem a categoria atual no laço ````for each```, depois é recuperado o valor do registro e por último utiliza-se ```reduce``` para fazer a soma de todos os registros e o valor é armazenado em uma variável:
+No caso de gastos o conteúdo da lista é filtrado pelos registros que correspondem a categoria atual no laço ```for each```, depois é recuperado o valor do registro e por último utiliza-se ```reduce``` para fazer a soma de todos os registros e o valor é armazenado em uma variável:
 
 ```java
 total += gastosNoMes.stream()
@@ -195,7 +197,7 @@ Ao final da iteração a somatória é salva no campo valor da lista ```totaisPo
 
 Depois de pronto o código foi refatorado em alguns pontos para ficar mais limpo e melhorar a qualidade não funcional do programa.
 
-_Problema_: A maioria dos controllers possuem um endpoint utilizado para edição de registros que recebe o id do registro que deve ser atualizado e o novo objeto já atualizado com a edição. O problema é que utilizando os métodos ```getters``` e ```setters``` a código ficava mais extenso. A classe ````DespesaVariavelController```, por exemplo, possuia o seguinte código antes da refatoração:
+_Problema_: A maioria dos controllers possuem um endpoint utilizado para edição de registros que recebe o id do registro que deve ser atualizado e o novo objeto já atualizado com a edição. O problema é que utilizando os métodos ```getters``` e ```setters``` a código ficava mais extenso. A classe [```DespesaVariavelController```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/controller/DespesaVariavelController.java "Ver classe"), por exemplo, possuia o seguinte código antes da refatoração:
 
 ```java
 public ResponseEntity<DespesaVariavel> editarDespesaVariavel(@PathVariable Long id, @RequestBody DespesaVariavel despesaVariavelAtualizada) {
@@ -218,7 +220,7 @@ public ResponseEntity<DespesaVariavel> editarDespesaVariavel(@PathVariable Long 
 
 O mesmo problema ocorria nos demais controllers.
 
-_Solução_: Foi utilizada a técnica de refatoração **Extract Method** e o fragmanto de código dos ```getters``` e ```setters``` foi agrupado no método ```atualizarRegistro()``` na classe ```DespesaVariavel```, sua implementação:
+_Solução_: Foi utilizada a técnica de refatoração **Extract Method** e o fragmanto de código dos ```getters``` e ```setters``` foi agrupado no método ```atualizarRegistro()``` na classe [```DespesaVariavel```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/model/DespesaVariavel.java "Ver classe"), sua implementação:
 
 ```java
 public void atualizarRegistro(DespesaVariavel novoRegistro) {
@@ -233,7 +235,7 @@ public void atualizarRegistro(DespesaVariavel novoRegistro) {
 }
 ```
 
-Depois dessa refatoção o código do método ```editarDespesaVariavel``` em ```DespesaVariavelController``` ficou assim:
+Depois dessa refatoção o código do método ```editarDespesaVariavel``` em [```DespesaVariavelController```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/controller/DespesaVariavelController.java "Ver classe") ficou assim:
 
 ```java
 public ResponseEntity<DespesaVariavel> editarDespesaVariavel(@PathVariable Long id, @RequestBody DespesaVariavel despesaVariavelAtualizada) {
