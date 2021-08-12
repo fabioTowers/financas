@@ -17,17 +17,17 @@ O sistema foi desenvolvido aplicando alguns conceitos de educação financeira q
 
 - **Gastos em Geral**: Gastos que acontecem no dia a dia e que não são planejados como, por exemplo, trocar o pneu do carro.
 
-Cada um dos tópicos acima foram abstraídos como uma entidade, por isso possuem suas classes homônimas no pacote model.
+Cada um dos tópicos acima foi abstraído como uma entidade, por isso possuem suas classes homônimas no pacote model.
 
 Cada um dos registros das entidades citadas possuem uma categoria associada (Ex.: alimentação, transporte, moradia etc.) e isso possibilita que o sistema contabilize quanto já foi gasto com cada categoria. Categoria também é uma entidade no sistema.
 
 Outra entidade são as receitas, tudo que o usuário recebeu é registrado como uma receita (como salário, retorno de investimentos etc.).
 
-Toda a aplicação foi pensada e organizada considerando um período comum de organização nas finanças pessoais: o mês. A grande maioria das pessoas se organizada financeiramente com base em ciclos de 30 dias aproximadamente. Levando isso em consideração, todos os registros de Despesas Fixas, Despesas Variáveis, Gastos e Receitas estão relacionados a um mês.
+Toda a aplicação foi pensada e organizada considerando um período comum de organização nas finanças pessoais: o mês. A grande maioria das pessoas se organiza financeiramente com base em ciclos de 30 dias aproximadamente. Levando isso em consideração, todos os registros de Despesas Fixas, Despesas Variáveis, Gastos e Receitas estão relacionados a um mês.
 
 ### Organização
 
-Foi aplicado o design pattern MVC para a organzação das responsabilidades nas classes, logo temos:
+Foi aplicado o design pattern MVC para a organização das responsabilidades nas classes, logo temos:
 
 * Controllers: Onde estão definidos os endpoints da API;
 * Exceções: Classe de exceções personalizadas;
@@ -95,7 +95,7 @@ Um ponto importante para implementar essa funcionalidade é que ela envolve basi
 * Despesas fixas e,
 * Despesas variáveis.
 
-Nessas três tabelas devem ser primeiramente selecionados apenas os registros relacionados ao mês especificado na requisição. Como a mesma operação é feita nas três tabelas foi criada a classe [```ListaPorMes```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/controller/ListaPorMes.java "Ver classe") no pacote dos controllers, e sua função retornar a lista de registros de cada tabela, isso também proporcionou maior **reutilização** e um **código limpo**.
+Nessas três tabelas devem ser primeiramente selecionados apenas os registros relacionados ao mês especificado na requisição. Como a mesma operação é feita nas três tabelas foi criada a classe [```ListaPorMes```](https://github.com/fabioTowers/financas/blob/main/src/main/java/com/example/financas/controller/ListaPorMes.java "Ver classe") no pacote dos controllers, e sua função é retornar a lista de registros de cada tabela, isso também proporcionou maior **reutilização** e um **código limpo**.
 
 Entretanto as tabelas são classes diferentes na aplicação, como um mesmo método poderia tratar isso?
 
